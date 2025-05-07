@@ -1,3 +1,4 @@
+import os
 import sys
 
 def ArchivoNuevo():
@@ -12,7 +13,7 @@ def ArchivoNuevo():
 
         print("Archivo creado con exito.")
     except IOError as e:
-        print("Error al escribir en el archivo: {e}")
+        print(f"Error al escribir en el archivo: {e}")
 
 def LeerArchivo():
     nombre = input("Ingrese el nombre del archivo a leer: ")
@@ -41,7 +42,7 @@ def AgregarTexto():
         print("Texto agregado con exito.")
 
     except IOError as e:
-        print("Error al agregar contenido en el archivo: {e}")
+        print(f"Error al agregar contenido en el archivo: {e}")
 
 def ReemplazarTexto():
 
@@ -56,16 +57,27 @@ def ReemplazarTexto():
         print("Texto reemplazado con exito.")
 
     except IOError as e:
-        print("Error al reemplazar contenido en el archivo: {e}")
+        print(f"Error al reemplazar contenido en el archivo: {e}")
 
-
+def EliminarArchivo():
+    nombre = input("Ingrese nombre del archivo que quiera eliminar: ")
+    texto = nombre + ".txt"
+    try:
+        os.remove(texto)
+        print("Archivo eliminado con exito")
+    except FileNotFoundError:
+        print(f"El archivo {texto} no fue encontrado")
+    except PermissionError:
+        print(f"No tienes los permisos para eliminar el archivo {texto}")
+    except Exception as e:
+        print(f"Error inesperado: {str(e)}")    
 while True:
     print("╔════════════════════════════════════════════╗")
     print("║               MENU PRINCIPAL.              ║")
     print("╠════════════════════════════════════════════╣")
     print("║ 1. Crear un archivo.  2. Leer un archivo.  ║")
     print("║ 3. Agregar texto.     4. Reemplazar texto. ║")
-    print("║ 5. Salir                                   ║")
+    print("║ 5. Eliminar           6. Salir             ║")
     print("╚════════════════════════════════════════════╝")
 
     opcion = input("Seleccione una opcion entre [1 - 5] -> ")
@@ -79,6 +91,8 @@ while True:
     elif opcion == "4":
         ReemplazarTexto()
     elif opcion == "5":
-        sys.exit()
+        EliminarArchivo()
+    elif opcion == "6":
+        sys.exit()    
     else:
         print("Opcion invalida.")
